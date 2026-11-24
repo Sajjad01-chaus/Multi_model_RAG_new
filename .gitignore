@@ -1,0 +1,19 @@
+# Secrets (only the placeholder template belongs in Git)
+.env
+.env.*
+!.env.example
+
+# Local runtime data and dependencies
+data/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+node_modules/
+dist/
+*.log
+*.tsbuildinfo
+.ruff_cache/
+.DS_Store
+.idea/
+.vscode/
