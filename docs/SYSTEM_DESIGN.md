@@ -4,6 +4,8 @@ Version: 1.1
 Date: 24 November 2026  
 Status: Local MVP implemented; broader target architecture remains planned. See README.md for the implemented scope and run commands.
 
+Current citation behavior: generate claim-level evidence references and assign source numbers in the backend. Per the user's updated preference, missing/malformed references do not block the answer: omit invalid links, retain usable text with a verification note, and mark the response partially answered. Actual unknown sources are never linked. This supersedes stricter citation-error behavior described in the original target design.
+
 ## Delivery scope for the 30 minute build
 
 **This section governs the initial implementation. Sections 1–10 below describe the fuller target architecture; where they require more infrastructure or features, defer them as specified here.** The time budget is a delivery target, not a guarantee: first-time model downloads, dependency installation, and account access can consume it. Start the clock when implementation begins and report blockers rather than claiming unfinished requirements are complete.

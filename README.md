@@ -28,7 +28,7 @@ For frontend development, run `npm run dev` in `frontend` and open [the Vite dev
 - Groq image understanding and up to six sampled video frames with exact timestamps.
 - Hybrid RAG: local MiniLM semantic vectors in Qdrant + SQLite FTS5 BM25 keyword search, combined with reciprocal rank fusion.
 - Selected-source filtering in both retrieval channels before ranking fusion.
-- Groq grounded answers, validated citation IDs, and no-evidence/temporary-unavailability responses.
+- Groq grounded answers, application-numbered source references, and no-evidence/temporary-unavailability responses. Missing or malformed references do not hide an otherwise usable answer: invalid links are omitted and a verification note is shown.
 - Answer length and language preferences, source previews, video seeking, and ingestion status.
 - Real MCP server at `http://127.0.0.1:8000/mcp/` with `search_documents`, `analyze_image`, and `retrieve_video_frames`. Chat connects with an MCP client and records its tool calls.
 
@@ -50,6 +50,8 @@ Ingestion runs in the backend with concurrency one. Restarting marks interrupted
 The test creates a PDF, an image, and a short video; checks extraction, both hybrid channels, paraphrase retrieval, source filtering, FTS escaping, all three MCP tools, grounded answers, abstention, source resolution, video range requests, and deletion. It removes its uploaded test sources after success and writes results to ignored `data/test-fixtures/smoke-results.json`. Live tests consume free-tier quota and may need a retry if Groq is throttling.
 
 The UI's TypeScript checks and production compilation run with `npm run build`. Browser visual QA may be limited by the local browser tooling; API smoke tests do not establish pixel-level UI correctness.
+
+Run `.venv/Scripts/python.exe -m pytest tests/test_grounding.py -q` for citation-numbering, non-blocking fallback, and named-source-routing regression tests. Questions naming the AI/ML resume or a specific video automatically narrow source scope unless the user has explicitly selected files.
 
 To test your own files explicitly, run `scripts/test_files.py --pdf <path> --video <path>` with the virtual-environment Python. This sends retrieved text and frames to Groq, leaves those sources in the local library, and saves private answers in ignored `data/user-acceptance.json`. Run `scripts/check_staged.py` before committing to check staged files for the configured key and private runtime folders.
 

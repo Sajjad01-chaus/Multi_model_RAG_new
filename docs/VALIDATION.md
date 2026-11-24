@@ -9,6 +9,14 @@ Verified locally on 24 November 2026.
 - Explicitly supplied user PDF: extraction, grounded-answer generation, scoped citations, and source resolution passed. Supplied video: frame extraction and indexing passed; the grounded-answer request was temporarily unavailable under Groq HTTP 429. Their contents and detailed results remain in ignored local `data/`, never in this repository.
 - Secret audit rejects the configured API key, common token formats, private runtime directories, and oversized artifacts in staged files.
 
+## Citation correction
+
+The original model-authored inline citation numbers could disagree with the displayed source list and block answers. Generation now returns claims with short evidence IDs; the backend assigns display numbers deterministically. Missing or invalid references are omitted with a verification note, without hiding the answer. Unknown references are never attached to a different source. Ten regression tests pass, including nonconsecutive references, malformed/missing IDs, abstention, named-source routing, plain-answer compatibility, and a clearly labeled retrieved-passage fallback when model response formatting is incomplete.
+
+Both exact resume questions reported in the UI screenshot passed live API tests after the correction, with numbered citations, document-only sources, and no unnecessary vision tool calls. Naming the sample video similarly narrows retrieval to the matching video. Existing chat error messages remain historical; send a new question to test corrected behavior.
+
+The exact video question “what is in the sample video?” subsequently passed the live API test with status `answered`, usable answer text, timestamped video-only citations, and successful calls to all three MCP tools. Private answer contents remain in ignored local test reports.
+
 ## Time-constrained limitations
 
 Video speech/audio transcription is not implemented in this submission. Video search and answers use at most six visual samples with capture timestamps. Brief events may be missed, and the assistant cannot establish what was spoken. This is explicitly disclosed in API responses, source previews, README, and the system design.
